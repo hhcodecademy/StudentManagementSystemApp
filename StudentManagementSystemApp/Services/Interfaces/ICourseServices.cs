@@ -8,9 +8,10 @@ namespace StudentManagementSystemApp.Services.Interfaces
         Task<List<CourseDto>> GetAllAsync();
         Task<CourseDto> GetByIdAsync(int id);
 
-        Task UpdateAsync(CourseDto course, int id);
+        Task UpdateAsync(CourseDto course);
 
         Task<CourseDto> CreateAsync(CourseDto course);
 
+        Task DeleteAsync(int id);
     }
 }

@@ -26,6 +26,7 @@ namespace StudentManagementSystemApp.Services
             return dto;
         }
 
+
         public async Task<List<CourseDto>> GetAllAsync()
         {
             var items = await _courseRepository.GetAllAsync();
@@ -40,14 +41,24 @@ namespace StudentManagementSystemApp.Services
             return dto;
         }
 
-        public async Task UpdateAsync(CourseDto courseDto, int id)
+        public async Task UpdateAsync(CourseDto courseDto)
         {
-            var item = _courseRepository.GetByIdAsync(id);
+            var item = await _courseRepository.GetByIdAsync(courseDto.Id);
             if (item is not null)
             {
                 var entity = _mapper.Map<Course>(courseDto);
-                _courseRepository.Update(entity);
+                _courseRepository.Update2(entity);
             }
         }
+        public async Task DeleteAsync(int id)
+        {
+            var item = await _courseRepository.GetByIdAsync(id);
+            if (item is not null)
+            {
+                item.Deleted = 1;
+                _courseRepository.Update(item);
+            }
+        }
+
     }
 }

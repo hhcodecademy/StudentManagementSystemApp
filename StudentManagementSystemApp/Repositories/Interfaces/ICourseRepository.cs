@@ -8,6 +8,7 @@ namespace StudentManagementSystemApp.Repositories.Interfaces
         Task<Course> GetByIdAsync(int id);
 
         void Update(Course course);
+        void Update2(Course course);
 
         Task<Course> CreateAsync(Course course);
 

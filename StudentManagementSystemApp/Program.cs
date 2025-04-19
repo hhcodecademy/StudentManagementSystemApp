@@ -16,6 +16,8 @@ builder.Services.AddDbContext<AppDbContext>(opts => opts.UseSqlServer(
     builder.Configuration.GetConnectionString("SqlServerConnStr")
 ));
 
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+
 builder.Services.AddAutoMapper(typeof(CustomProfile));
 
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
