@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StudentManagementSystemApp.Dtos;
-using StudentManagementSystemApp.Services;
 using StudentManagementSystemApp.Services.Interfaces;
 
 namespace StudentManagementSystemApp.Controllers
@@ -32,8 +31,25 @@ namespace StudentManagementSystemApp.Controllers
         public async Task<IActionResult> Create(CourseDto dto)
         {
 
-            await _courseService.CreateAsync(dto);
-            return RedirectToAction("Index");
+            try
+            {
+                throw new Exception();
+
+                var savedDto = await _courseService.CreateAsync(dto);
+                if (savedDto is not null && savedDto.Id > 0)
+                {
+                    ViewData["SuccessMessage"] = $"{savedDto.Id} successfully added";
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                ViewData["ErrorMessage"] = $"Record dont successfully added.Error :{ex.Message}";
+            }
+
+            return View();
+            //return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -47,7 +63,11 @@ namespace StudentManagementSystemApp.Controllers
         {
 
             await _courseService.UpdateAsync(dto);
-            return RedirectToAction("Index");
+
+            ViewData["SuccessMessage"] = $"{dto.Id} successfully updated";
+
+            // return RedirectToAction("Index");
+            return View();
         }
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
